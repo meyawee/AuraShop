@@ -13,7 +13,9 @@ type ThemeProps = {
   darkColor?: string;
 };
 
-export type TextProps = ThemeProps & DefaultText['props'];
+export type TextProps = ThemeProps & DefaultText['props'] & {
+  fontWeight?: 'thin' | 'extraLight' | 'light' | 'regular' | 'medium' | 'semiBold' | 'bold' | 'extraBold' | 'black';
+}  
 export type ViewProps = ThemeProps & DefaultView['props'];
 
 export function useThemeColor(
@@ -33,6 +35,18 @@ export function useThemeColor(
 export function Text(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+   // Map fontWeight to the corresponding fontFamily
+   const fontFamilyMap = {
+    thin: 'NotoSansThai-Thin',
+    extraLight: 'NotoSansThai-ExtraLight',
+    light: 'NotoSansThai-Light',
+    regular: 'NotoSansThai-Regular',
+    medium: 'NotoSansThai-Medium',
+    semiBold: 'NotoSansThai-SemiBold',
+    bold: 'NotoSansThai-Bold',
+    extraBold: 'NotoSansThai-ExtraBold',
+    black: 'NotoSansThai-Black',
+  };
 
   return <DefaultText style={[{ color }, style]} {...otherProps} />;
 }
